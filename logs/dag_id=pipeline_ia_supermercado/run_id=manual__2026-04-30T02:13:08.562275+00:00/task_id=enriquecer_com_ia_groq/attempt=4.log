@@ -1,0 +1,240 @@
+[2026-04-30T02:46:20.202+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: pipeline_ia_supermercado.enriquecer_com_ia_groq manual__2026-04-30T02:13:08.562275+00:00 [queued]>
+[2026-04-30T02:46:20.213+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: pipeline_ia_supermercado.enriquecer_com_ia_groq manual__2026-04-30T02:13:08.562275+00:00 [queued]>
+[2026-04-30T02:46:20.213+0000] {taskinstance.py:1359} INFO - Starting attempt 4 of 4
+[2026-04-30T02:46:20.230+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): enriquecer_com_ia_groq> on 2026-04-30 02:13:08.562275+00:00
+[2026-04-30T02:46:20.237+0000] {standard_task_runner.py:57} INFO - Started process 5504 to run task
+[2026-04-30T02:46:20.242+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'pipeline_ia_supermercado', 'enriquecer_com_ia_groq', 'manual__2026-04-30T02:13:08.562275+00:00', '--job-id', '21', '--raw', '--subdir', 'DAGS_FOLDER/dag_supermercado_ai.py', '--cfg-path', '/tmp/tmp7vwhauzz']
+[2026-04-30T02:46:20.247+0000] {standard_task_runner.py:85} INFO - Job 21: Subtask enriquecer_com_ia_groq
+[2026-04-30T02:46:20.317+0000] {task_command.py:415} INFO - Running <TaskInstance: pipeline_ia_supermercado.enriquecer_com_ia_groq manual__2026-04-30T02:13:08.562275+00:00 [running]> on host 13ed143f59b1
+[2026-04-30T02:46:19.558+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='cjunior' AIRFLOW_CTX_DAG_ID='pipeline_ia_supermercado' AIRFLOW_CTX_TASK_ID='enriquecer_com_ia_groq' AIRFLOW_CTX_EXECUTION_DATE='2026-04-30T02:13:08.562275+00:00' AIRFLOW_CTX_TRY_NUMBER='4' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-30T02:13:08.562275+00:00'
+[2026-04-30T02:46:19.752+0000] {logging_mixin.py:151} INFO - Enviando dados para a Groq
+[2026-04-30T02:46:22.029+0000] {taskinstance.py:1935} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/output_parsers/json.py", line 82, in parse_result
+    return parse_json_markdown(text)
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/utils/json.py", line 153, in parse_json_markdown
+    return _parse_json(json_str, parser=parser)
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/utils/json.py", line 169, in _parse_json
+    return parser(json_str)
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/utils/json.py", line 126, in parse_partial_json
+    return json.loads(s, strict=strict)
+  File "/usr/local/lib/python3.9/json/__init__.py", line 359, in loads
+    return cls(**kw).decode(s)
+  File "/usr/local/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/lib/python3.9/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/scripts/ai_processor.py", line 38, in enrich_with_ai
+    respostas = chain.invoke({"dados": dados_input})
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/runnables/base.py", line 3254, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/output_parsers/base.py", line 200, in invoke
+    return self._call_with_config(
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/runnables/base.py", line 2092, in _call_with_config
+    context.run(
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/runnables/config.py", line 430, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/output_parsers/base.py", line 201, in <lambda>
+    lambda inner_input: self.parse_result(
+  File "/home/airflow/.local/lib/python3.9/site-packages/langchain_core/output_parsers/json.py", line 85, in parse_result
+    raise OutputParserException(msg, llm_output=text) from e
+langchain_core.exceptions.OutputParserException: Invalid json output: Aqui está a análise dos feedbacks dos clientes e o retorno em formato JSON:
+
+```python
+import json
+
+# Dados dos feedbacks dos clientes
+feedbacks = [
+    {'id': 1, 'produto_nome_bruto': 'tomate cereja 200g', 'comentario_cliente': 'Alguns tomates vieram amassados no fundo da embalagem.'},
+    {'id': 2, 'produto_nome_bruto': 'pao de forma artesanal', 'comentario_cliente': 'Muito macio e fresquinho, adorei!'},
+    {'id': 3, 'produto_nome_bruto': 'carne moida patinho', 'comentario_cliente': 'A carne estava com muita gordura dessa vez.'},
+    {'id': 4, 'produto_nome_bruto': 'detergente', 'comentario_cliente': 'O cheiro é bom, mas nao faz muita espuma.'}
+]
+
+# Função para analisar o sentimento do feedback
+def analisar_sentimento(comentario_cliente):
+    palavras_chave_positivas = ['adorei', 'muito', 'fresquinho', 'bom']
+    palavras_chave_negativas = ['amassados', 'gordura', 'nao faz']
+    
+    sentimento = 'Positivo' if any(palavra in comentario_cliente.lower() for palavra in palavras_chave_positivas) else 'Negativo'
+    return sentimento
+
+# Função para avaliar a urgência do feedback
+def avaliar_urgencia(comentario_cliente):
+    urgencia = 3  # Valor padrão
+    
+    if 'amassados' in comentario_cliente.lower() or 'gordura' in comentario_cliente.lower():
+        urgencia = 5  # Alta urgência
+    elif 'nao faz' in comentario_cliente.lower():
+        urgencia = 2  # Média urgência
+    
+    return urgencia
+
+# Função para gerar a ação recomendada
+def gerar_acao_recomendada(sentimento, comentario_cliente):
+    if sentimento == 'Positivo':
+        return 'Parabéns! Continuem fazendo um ótimo trabalho!'
+    elif sentimento == 'Negativo':
+        return 'Peço desculpas pelo problema. Vamos melhorar nossa qualidade!'
+    else:
+        return 'Ação não definida'
+
+# Analisar os feedbacks e gerar o JSON
+feedbacks_analisados = []
+for feedback in feedbacks:
+    sentimento = analisar_sentimento(feedback['comentario_cliente'])
+    urgencia = avaliar_urgencia(feedback['comentario_cliente'])
+    acao_recomendada = gerar_acao_recomendada(sentimento, feedback['comentario_cliente'])
+    
+    feedback_analisado = {
+        'id': feedback['id'],
+        'sentimento': sentimento,
+        'urgencia': urgencia,
+        'acao_recomendada': acao_recomendada
+    }
+    
+    feedbacks_analisados.append(feedback_analisado)
+
+# Converter a lista de feedbacks em JSON
+json_feedbacks = json.dumps(feedbacks_analisados, indent=4)
+
+print(json_feedbacks)
+```
+
+O resultado será um JSON com os campos 'id', 'sentimento', 'urgencia' e 'acao_recomendada' para cada feedback:
+
+```json
+[
+    {
+        "id": 1,
+        "sentimento": "Negativo",
+        "urgencia": 5,
+        "acao_recomendada": "Peço desculpas pelo problema. Vamos melhorar nossa qualidade!"
+    },
+    {
+        "id": 2,
+        "sentimento": "Positivo",
+        "urgencia": 3,
+        "acao_recomendada": "Parabéns! Continuem fazendo um ótimo trabalho!"
+    },
+    {
+        "id": 3,
+        "sentimento": "Negativo",
+        "urgencia": 5,
+        "acao_recomendada": "Peço desculpas pelo problema. Vamos melhorar nossa qualidade!"
+    },
+    {
+        "id": 4,
+        "sentimento": "Negativo",
+        "urgencia": 2,
+        "acao_recomendada": "Peço desculpas pelo problema. Vamos melhorar nossa qualidade!"
+    }
+]
+```
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE 
+[2026-04-30T02:46:22.043+0000] {taskinstance.py:1398} INFO - Marking task as FAILED. dag_id=pipeline_ia_supermercado, task_id=enriquecer_com_ia_groq, execution_date=20260430T021308, start_date=20260430T024620, end_date=20260430T024622
+[2026-04-30T02:46:22.066+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 21 for task enriquecer_com_ia_groq (Invalid json output: Aqui está a análise dos feedbacks dos clientes e o retorno em formato JSON:
+
+```python
+import json
+
+# Dados dos feedbacks dos clientes
+feedbacks = [
+    {'id': 1, 'produto_nome_bruto': 'tomate cereja 200g', 'comentario_cliente': 'Alguns tomates vieram amassados no fundo da embalagem.'},
+    {'id': 2, 'produto_nome_bruto': 'pao de forma artesanal', 'comentario_cliente': 'Muito macio e fresquinho, adorei!'},
+    {'id': 3, 'produto_nome_bruto': 'carne moida patinho', 'comentario_cliente': 'A carne estava com muita gordura dessa vez.'},
+    {'id': 4, 'produto_nome_bruto': 'detergente', 'comentario_cliente': 'O cheiro é bom, mas nao faz muita espuma.'}
+]
+
+# Função para analisar o sentimento do feedback
+def analisar_sentimento(comentario_cliente):
+    palavras_chave_positivas = ['adorei', 'muito', 'fresquinho', 'bom']
+    palavras_chave_negativas = ['amassados', 'gordura', 'nao faz']
+    
+    sentimento = 'Positivo' if any(palavra in comentario_cliente.lower() for palavra in palavras_chave_positivas) else 'Negativo'
+    return sentimento
+
+# Função para avaliar a urgência do feedback
+def avaliar_urgencia(comentario_cliente):
+    urgencia = 3  # Valor padrão
+    
+    if 'amassados' in comentario_cliente.lower() or 'gordura' in comentario_cliente.lower():
+        urgencia = 5  # Alta urgência
+    elif 'nao faz' in comentario_cliente.lower():
+        urgencia = 2  # Média urgência
+    
+    return urgencia
+
+# Função para gerar a ação recomendada
+def gerar_acao_recomendada(sentimento, comentario_cliente):
+    if sentimento == 'Positivo':
+        return 'Parabéns! Continuem fazendo um ótimo trabalho!'
+    elif sentimento == 'Negativo':
+        return 'Peço desculpas pelo problema. Vamos melhorar nossa qualidade!'
+    else:
+        return 'Ação não definida'
+
+# Analisar os feedbacks e gerar o JSON
+feedbacks_analisados = []
+for feedback in feedbacks:
+    sentimento = analisar_sentimento(feedback['comentario_cliente'])
+    urgencia = avaliar_urgencia(feedback['comentario_cliente'])
+    acao_recomendada = gerar_acao_recomendada(sentimento, feedback['comentario_cliente'])
+    
+    feedback_analisado = {
+        'id': feedback['id'],
+        'sentimento': sentimento,
+        'urgencia': urgencia,
+        'acao_recomendada': acao_recomendada
+    }
+    
+    feedbacks_analisados.append(feedback_analisado)
+
+# Converter a lista de feedbacks em JSON
+json_feedbacks = json.dumps(feedbacks_analisados, indent=4)
+
+print(json_feedbacks)
+```
+
+O resultado será um JSON com os campos 'id', 'sentimento', 'urgencia' e 'acao_recomendada' para cada feedback:
+
+```json
+[
+    {
+        "id": 1,
+        "sentimento": "Negativo",
+        "urgencia": 5,
+        "acao_recomendada": "Peço desculpas pelo problema. Vamos melhorar nossa qualidade!"
+    },
+    {
+        "id": 2,
+        "sentimento": "Positivo",
+        "urgencia": 3,
+        "acao_recomendada": "Parabéns! Continuem fazendo um ótimo trabalho!"
+    },
+    {
+        "id": 3,
+        "sentimento": "Negativo",
+        "urgencia": 5,
+        "acao_recomendada": "Peço desculpas pelo problema. Vamos melhorar nossa qualidade!"
+    },
+    {
+        "id": 4,
+        "sentimento": "Negativo",
+        "urgencia": 2,
+        "acao_recomendada": "Peço desculpas pelo problema. Vamos melhorar nossa qualidade!"
+    }
+]
+```
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE ; 5504)
+[2026-04-30T02:46:22.077+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2026-04-30T02:46:22.098+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check

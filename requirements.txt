@@ -1,0 +1,6 @@
+pyspark
+langchain
+langchain-groq
+python-dotenv
+pandas
+psycopg2-binary

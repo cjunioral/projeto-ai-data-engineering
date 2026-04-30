@@ -1,0 +1,26 @@
+[2026-04-30T03:04:51.978+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: pipeline_ia_supermercado.enriquecer_com_ia_groq scheduled__2026-04-29T00:00:00+00:00 [queued]>
+[2026-04-30T03:04:52.005+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: pipeline_ia_supermercado.enriquecer_com_ia_groq scheduled__2026-04-29T00:00:00+00:00 [queued]>
+[2026-04-30T03:04:52.006+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 2
+[2026-04-30T03:04:52.045+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): enriquecer_com_ia_groq> on 2026-04-29 00:00:00+00:00
+[2026-04-30T03:04:52.064+0000] {standard_task_runner.py:57} INFO - Started process 6060 to run task
+[2026-04-30T03:04:52.069+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'pipeline_ia_supermercado', 'enriquecer_com_ia_groq', 'scheduled__2026-04-29T00:00:00+00:00', '--job-id', '26', '--raw', '--subdir', 'DAGS_FOLDER/dag_supermercado_ai.py', '--cfg-path', '/tmp/tmpqv6u04di']
+[2026-04-30T03:04:52.077+0000] {standard_task_runner.py:85} INFO - Job 26: Subtask enriquecer_com_ia_groq
+[2026-04-30T03:04:51.760+0000] {task_command.py:415} INFO - Running <TaskInstance: pipeline_ia_supermercado.enriquecer_com_ia_groq scheduled__2026-04-29T00:00:00+00:00 [running]> on host 13ed143f59b1
+[2026-04-30T03:04:51.962+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='cjunior' AIRFLOW_CTX_DAG_ID='pipeline_ia_supermercado' AIRFLOW_CTX_TASK_ID='enriquecer_com_ia_groq' AIRFLOW_CTX_EXECUTION_DATE='2026-04-29T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-04-29T00:00:00+00:00'
+[2026-04-30T03:04:51.636+0000] {logging_mixin.py:151} INFO - Lendo arquivo: /opt/***/data/silver/supermarket_cleaned/part-00000-49525d8e-e27b-4952-84f8-645ebafd0143-c000.csv
+[2026-04-30T03:04:51.670+0000] {logging_mixin.py:151} INFO - Enviando dados para análise na Groq
+[2026-04-30T03:04:53.981+0000] {logging_mixin.py:151} WARNING - /home/***/.local/lib/python3.9/site-packages/pyarrow/pandas_compat.py:373 FutureWarning: is_sparse is deprecated and will be removed in a future version. Check `isinstance(dtype, pd.SparseDtype)` instead.
+[2026-04-30T03:04:54.010+0000] {logging_mixin.py:151} INFO - Camada GOLD gerada com sucesso: /opt/***/data/gold/insights_supermercado.parquet
+[2026-04-30T03:04:54.010+0000] {logging_mixin.py:151} INFO - 
+--- AMOSTRA DOS INSIGHTS ---
+[2026-04-30T03:04:54.030+0000] {logging_mixin.py:151} INFO -        produto_nome_bruto  ...                                   acao_recomendada
+0      tomate cereja 200g  ...  Verificar a embalagem para evitar danos aos pr...
+1  pao de forma artesanal  ...                    Manter a qualidade dos produtos
+2     carne moida patinho  ...  Revisar a qualidade da carne e reduzir a quant...
+3              detergente  ...                  Melhorar a eficácia do detergente
+
+[4 rows x 3 columns]
+[2026-04-30T03:04:54.031+0000] {python.py:194} INFO - Done. Returned value was: None
+[2026-04-30T03:04:54.053+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=pipeline_ia_supermercado, task_id=enriquecer_com_ia_groq, execution_date=20260429T000000, start_date=20260430T030451, end_date=20260430T030454
+[2026-04-30T03:04:54.127+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2026-04-30T03:04:54.160+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check
